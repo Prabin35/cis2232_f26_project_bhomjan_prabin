@@ -1,182 +1,252 @@
 package ca.hccis.files;
 
-import ca.hccis.files.entity.Camper;
-import ca.hccis.util.CisUtility;
+import ca.hccis.files.entity.Match;
+import ca.hccis.files.util.CisUtility;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 
+import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashMap;
-import java.util.List;
 
 /**
- * Controls the overall flow of the program.
+ * Controller for the Valorant Performance Tracker application.
  *
- * @author cis2232
- * @since 20260917
+ * CIS 2232 | Assignment 1
+ *
+ * @author Prabin Bhomjan
+ * @since 09242026
  */
 public class Controller {
 
-    public static final int EXIT = 0;
+    public static final String MENU =
+            "A) Add Match\n" +
+                    "V) View Matches\n" +
+                    "X) Exit\n";
 
-    public static final String MENU = "1) Add" + System.lineSeparator()
-            + "2) Edit" + System.lineSeparator()
-            + "3) View" + System.lineSeparator()
-            + EXIT + ") Exit"
-            + System.lineSeparator();
+    public static final String MESSAGE_ERROR = "Invalid menu option.";
+    public static final String MESSAGE_EXIT = "Goodbye!";
+    public static final String MESSAGE_SUCCESS = "Match saved successfully.";
 
-    public static final String MESSAGE_ERROR = "Error";
-    public static final String MESSAGE_EXIT = "Goodbye";
-    public static final String MESSAGE_SUCCESS = "Success";
+    public static final String EXIT = "X";
 
-    private static HashMap<Integer, Camper> camperMap = new HashMap();
-    private static Gson gson = new Gson();
+    private static final HashMap<Integer, Match> matches = new HashMap<>();
 
-    //TODO if the cis2232 folder does not exist, then have your program create it.
-    //TODO filename to be changed from campers based on assignment requirements.
-    public static final String PATH_NAME = "c:\\cis2232\\campers.json";
+    private static final Gson gson =
+            new GsonBuilder()
+                    .setPrettyPrinting()
+                    .create();
 
+    public static final String PATH_NAME =
+            "c:\\cis2232\\data_bhomjan_prabin.json";
+
+
+    /**
+     * Starts the Valorant Performance Tracker application.
+     *
+     * @param args command line arguments
+     */
     public static void main(String[] args) {
 
         initialize();
 
-        //Gson
-//        Camper test = camperMap.get(22334);
-//        String camperJson = gson.toJson(test);
-//        IO.println(camperJson);
-//
-//        Camper camperFromJson = gson.fromJson(camperJson, Camper.class);
-//        System.out.println(camperFromJson.toString());
-
-
-        int menuOption;
+        String choice;
 
         do {
-            menuOption = CisUtility.getInputInt(MENU);
 
-            switch (menuOption) {
+            choice = CisUtility.getInputString(MENU);
+
+            switch (choice.toUpperCase()) {
+
+                case "A":
+                    addMatch();
+                    break;
+
+                case "V":
+                    viewMatches();
+                    break;
+
                 case EXIT:
                     System.out.println(MESSAGE_EXIT);
-                    break; //Break out of the loop as we're finished.
-                case 1:
-                    add();
                     break;
-                case 2:
-                    edit();
-                    break;
-                case 3:
-                    viewAll();
-                    break;
+
                 default:
                     System.out.println(MESSAGE_ERROR);
-                    break;
             }
-        } while (menuOption != EXIT);
+
+        } while (!choice.equalsIgnoreCase(EXIT));
     }
+
 
     /**
-     * Processing for menu option 1
-     *
-     * @author
-     * @since
+     * Adds a new Valorant match to the collection.
      */
-    public static void add() {
-        Camper newCamper = new Camper();
-        IO.println("--Add Camper--");
-        newCamper.getInformation();
+    public static void addMatch() {
 
-        //TODO what if the registration id already exists.  Give the user a warning and ask if they want to overwrite
-        //the row.
-        //read file nad see if the new camper is already there, and if so check with user to see if should overwrite
-        camperMap.put(newCamper.getRegistrationId(), newCamper);
-        writeAll();
+        System.out.println("\n--- Add Valorant Match ---");
+
+        Match match = new Match();
+
+        match.getInformation();
+
+        int newId = getNextMatchId();
+
+        match.setMatchId(newId);
+
+        matches.put(newId, match);
+
+        saveMatches();
+
+        System.out.println(MESSAGE_SUCCESS);
     }
+
 
     /**
-     * Processing for menu option 2.
+     * Determines the next available match ID.
      *
-     * @author
-     * @since
+     * @return next match ID
      */
-    public static void edit() {
-        System.out.println("Processing option 2");
-        int regID = CisUtility.getInputInt("Reg ID: ");
-        Camper editingCamper = camperMap.get(regID);
-        editingCamper.edit();
-        //TODO What if the regID not found?
-        //Handle this situation.
-        writeAll(); //save to file
-    }
+    private static int getNextMatchId() {
 
-    /**
-     * Processing for menu option 3.
-     *
-     * @author
-     * @since
-     */
-    public static void viewAll() {
-        readAll();
-        //TODO Need to show all the campers.  Note want to show the latest from the file, not just
-        //what is currently in the map.
-    }
+        int highestId = 0;
 
+        for (Integer id : matches.keySet()) {
 
-    public static void writeAll() {
-        try {
-            FileWriter writer = new FileWriter(PATH_NAME, false);
-            for (Camper current : camperMap.values()) {
-                writer.append(gson.toJson(current));
-                writer.append(System.lineSeparator());
-                System.out.println("Successfully written JSON string to file.");
+            if (id > highestId) {
+                highestId = id;
             }
-            writer.close();
-        } catch (IOException e) {
-            e.printStackTrace();
         }
-    }
 
-    public static void readAll() {
-        try {
-            FileReader reader = new FileReader(PATH_NAME);
-            List<String> lines = reader.readAllLines();
-            for(int i = 0; i < lines.size(); i++) {
-                Camper camperFromJson = gson.fromJson(lines.get(i), Camper.class);
-                camperMap.put(camperFromJson.getRegistrationId(), camperFromJson);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        return highestId + 1;
     }
 
 
-    public static void initialize() {
+    /**
+     * Displays all saved Valorant matches.
+     */
+    public static void viewMatches() {
 
-        Path path = Paths.get(PATH_NAME);
+        loadMatches();
 
-        // Check if the file exists
-        if (Files.exists(path)) {
-            System.out.println("Campers exist.");
-            readAll();
+        System.out.println("\n--- Valorant Match History ---");
+
+        if (matches.isEmpty()) {
+
+            System.out.println("There are no matches saved.");
+
         } else {
 
+            for (Match match : matches.values()) {
 
-            Camper camper = new Camper(1, 22334, "Bob", "Stephens", "2020-01-05");
-            Camper camper2 = new Camper(2, 22335, "Alice", "Johnson", "2019-07-14");
-            Camper camper3 = new Camper(3, 22336, "Charlie", "Williams", "2021-03-22");
-            Camper camper4 = new Camper(4, 22337, "Diana", "Brown", "2020-11-09");
-            Camper camper5 = new Camper(5, 22338, "Ethan", "Miller", "2018-05-17");
-            camperMap.put(camper.getRegistrationId(), camper);
-            camperMap.put(camper2.getRegistrationId(), camper2);
-            camperMap.put(camper3.getRegistrationId(), camper3);
-            camperMap.put(camper4.getRegistrationId(), camper4);
-            camperMap.put(camper5.getRegistrationId(), camper5);
+                System.out.println(match);
+                System.out.println("------------------------------");
+            }
+        }
+    }
 
-            writeAll();
+
+    /**
+     * Saves all matches to the JSON file.
+     */
+    public static void saveMatches() {
+
+        try (FileWriter writer = new FileWriter(PATH_NAME)) {
+
+            gson.toJson(matches, writer);
+
+        } catch (IOException e) {
+
+            System.out.println(
+                    "Unable to save match data: " + e.getMessage()
+            );
+        }
+    }
+
+
+    /**
+     * Loads matches from the JSON file.
+     */
+    public static void loadMatches() {
+
+        File file = new File(PATH_NAME);
+
+        if (!file.exists() || file.length() == 0) {
+            return;
         }
 
+        try (FileReader reader = new FileReader(file)) {
+
+            Type mapType =
+                    new TypeToken<HashMap<Integer, Match>>() {
+                    }.getType();
+
+            HashMap<Integer, Match> savedMatches =
+                    gson.fromJson(reader, mapType);
+
+            if (savedMatches != null) {
+
+                matches.clear();
+                matches.putAll(savedMatches);
+            }
+
+        } catch (IOException e) {
+
+            System.out.println(
+                    "Unable to load match data: " + e.getMessage()
+            );
+        }
+    }
+
+
+    /**
+     * Creates the required directory and JSON file if necessary.
+     * Existing match information is loaded when the program starts.
+     */
+    public static void initialize() {
+
+        Path filePath = Paths.get(PATH_NAME);
+
+        Path directory = filePath.getParent();
+
+        try {
+
+            if (directory != null && !Files.exists(directory)) {
+
+                Files.createDirectories(directory);
+
+                System.out.println(
+                        "Created directory: " + directory
+                );
+            }
+
+            if (Files.exists(filePath)) {
+
+                loadMatches();
+
+                System.out.println("Match data loaded.");
+
+            } else {
+
+                saveMatches();
+
+                System.out.println(
+                        "Created new data file: " + PATH_NAME
+                );
+            }
+
+        } catch (IOException e) {
+
+            System.out.println(
+                    "Unable to initialize application: "
+                            + e.getMessage()
+            );
+        }
     }
 }

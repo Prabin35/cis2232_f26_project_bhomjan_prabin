@@ -1,4 +1,4 @@
-package ca.hccis.util;
+package ca.hccis.files.util;
 
 import java.text.NumberFormat;
 import java.time.LocalDateTime;
