@@ -1,98 +1,73 @@
-# Project: Valorant Performance Tracker
+# Valorant Performance Tracker #
 
----
+CIS 2232 semester project
 
-## Development Team
+## Development Team ##
 
-Business Client: Brian
+Business Client (BA):  Brian	<br/>
+Lead Developer:  Prabin Bhomjan	<br/>
+Project Manager / QA:  Hassan	<br/>
 
-Lead Developer: Prabin
+## Description ##
 
-Quality Control: Hassan
+The Valorant Performance Tracker is a web application that helps Valorant players keep track of their performance after each match. Valorant is a competitive first-person shooter where players look at statistics such as kills, deaths, assists, damage, Average Combat Score (ACS), and KAST to see how well they performed. Although the game provides statistics after a match, this application allows players to record their own match history and easily compare their performance over time.
 
----
+The user enters information from a completed Valorant match, including the player's name, the agent played, the map, kills, deaths, assists, total damage dealt, rounds played, and KAST rounds. The application saves this information and uses several of the fields to calculate additional performance statistics: the KDA ratio, a simplified Average Combat Score, and the KAST percentage.
 
-## Description
+The goal of the application is to give Valorant players a simple way to record their match statistics and view calculated performance information. In the future, the stored match information could also be used to compare results between different agents and maps.
 
-This project will allow Valorant players to track and analyze their match performance statistics. Valorant is a competitive first-person shooter game where players can review statistics such as kills, deaths, assists, damage dealt, and round performance. While the game provides post-match statistics, this application will allow players to maintain their own match history and compare performance trends over time.
+## Project Information ##
 
-The application will store information about each completed match, including the player's name, selected agent, map played, kills, deaths, assists, total damage dealt, rounds played, and KAST rounds. Using this information, the system will calculate additional performance metrics that help players evaluate their overall contribution during a match.
+Project Title:  Valorant Performance Tracker	<br/>
+Server Port:  8080 (http://localhost:8080)	<br/>
+Application folder:  Project/Valorant_Performance_Tracker_App	<br/>
+Database script:  Project/Valorant_Performance_Tracker_App/src/main/resources/db/mysql/createDatabase.sql	<br/>
+Java package:  ca.hccis.valorant	<br/>
+Main entity:  ValorantMatch (table valorant_match), based on the Match class from Assignment 1	<br/>
 
-The application will calculate a KDA Ratio, a simplified Average Combat Score (ACS), and a KAST Percentage. These calculated values provide a quick summary of player performance and can be used to compare results across multiple matches. The application may also be extended in the future to compare performance by agent, map, or other game-related statistics.
+## Color ##
 
----
+Main Color:  Valorant Red (#FF4655)	<br/>
+Secondary Color:  To be determined
 
-## Color
+## Required Fields ##
 
-Main Color: #FF4655 (Valorant Red)
+| Name | Data Type | Description |
+|:---|:---:|:---|
+| Player Name | String | The player's username or Riot ID |
+| Agent | String | The Valorant agent used during the match |
+| Map | String | The map where the match was played |
+| Kills | Integer | Total number of kills earned during the match |
+| Deaths | Integer | Total number of deaths during the match |
+| Assists | Integer | Total number of assists earned during the match |
+| Damage Dealt | Integer | Total amount of damage dealt during the match |
+| Rounds Played | Integer | Total number of rounds played during the match |
+| KAST Rounds | Integer | Number of rounds where the player had a kill, assist, survived, or was traded |
 
----
+Note: the database also carries an auto-generated `id` (primary key) for each record.
 
-## Required Fields
+## Calculation ##
 
-This will be a list of fields and their datatype (class design format).
+The application calculates three statistics from the entered fields. They are derived from the stored data and are not stored in the database.
 
-* id: int // primary key
-* playerName: String
-* agent: String
-* map: String
-* kills: int
-* deaths: int
-* assists: int
-* damageDealt: int
-* roundsPlayed: int
-* kastRounds: int
-* kdaRatio: double // calculated
-* averageCombatScore: double // calculated
-* kastPercentage: double // calculated
+**KDA Ratio**
 
----
+`KDA = (Kills + Assists) / Deaths`
 
-## Calculation
+If a player has zero deaths, the application must handle this separately to prevent division by zero.
 
-Once the user enters all match statistics, the application will calculate three performance metrics.
+**Simplified Average Combat Score (ACS)**
 
-### KDA Ratio
+`ACS = ((Kills x 150) + (Assists x 50) + Damage Dealt) / Rounds Played`
 
-The KDA Ratio measures overall contribution based on kills, assists, and deaths.
+This is a simplified calculation for this project and is not intended to reproduce Valorant's official ACS calculation.
 
-KDA Ratio = (Kills + Assists) / Deaths
+**KAST Percentage**
 
-Example:
+`KAST % = (KAST Rounds / Rounds Played) x 100`
 
-20 kills + 8 assists = 28
+Example: 20 kills, 8 assists, 14 deaths, 3,200 damage, 21 rounds, 16 KAST rounds gives KDA = 2.00, ACS = 314.29, KAST = 76.19%.
 
-28 / 14 deaths = 2.00 KDA
+## Report Details ##
 
-Note: If deaths equal 0, the application must handle division by zero appropriately.
-
-### Simplified Average Combat Score (ACS)
-
-A simplified ACS formula will be used for this project.
-
-ACS = ((Kills × 150) + (Assists × 50) + Damage Dealt) / Rounds Played
-
-Example:
-
-((20 × 150) + (8 × 50) + 3200) / 21
-
-= (3000 + 400 + 3200) / 21
-
-= 314.29 ACS
-
-### KAST Percentage
-
-KAST represents rounds where the player earned a kill, assist, survived, or was traded.
-
-KAST % = (KAST Rounds / Rounds Played) × 100
-
-Example:
-
-16 / 21 × 100
-
-= 76.19%
-
----
-
-## Report Details
-
+To be determined in a future sprint

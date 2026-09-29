@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="fragments/head :: head">
+        <title id="pageTitle"  th:text="#{label.add.edit}">Label Add/Edit</title>
+    </head>
+    <body>
+        <nav th:replace="fragments/navHeader :: navbar"></nav>
+        <div class="container has-text-centered">
+            <h2 class="title is-2" th:if= "${valorantMatch.matchId != null}" th:text="#{label.edit.match}">label Edit</h2>
+            <h2 class="title is-2" th:if= "${valorantMatch.matchId == null}" th:text="#{label.add.match}">label Add</h2>
+
+
+            <form th:action="@{/valorantmatch/submit}" method="post" class="wbb" style="display:inline-block;text-align:left!important">
+
+                <!-- Hidden ID field -->
+                <input type="hidden" th:field="${valorantMatch.matchId}" />
+
+                <p>
+                    <label>Player Name:</label>
+                    <input type="text" th:field="${valorantMatch.playerName}" />
+                </p>
+                <p class="cd" th:if="${#fields.hasErrors('${valorantMatch.playerName}')}" th:errors="${valorantMatch.playerName}"></p>
+
+                <p>
+                    <label>Agent:</label>
+                    <input type="text" th:field="${valorantMatch.agent}" />
+                </p>
+                <p class="cd" th:if="${#fields.hasErrors('${valorantMatch.agent}')}" th:errors="${valorantMatch.agent}"></p>
+
+                <p>
+                    <label>Map:</label>
+                    <input type="text" th:field="${valorantMatch.mapName}" />
+                </p>
+                <p class="cd" th:if="${#fields.hasErrors('${valorantMatch.mapName}')}" th:errors="${valorantMatch.mapName}"></p>
+
+                <p>
+                    <label>Kills:</label>
+                    <input type="number" th:field="${valorantMatch.kills}" />
+                </p>
+                <p class="cd" th:if="${#fields.hasErrors('${valorantMatch.kills}')}" th:errors="${valorantMatch.kills}"></p>
+
+                <p>
+                    <label>Deaths:</label>
+                    <input type="number" th:field="${valorantMatch.deaths}" />
+                </p>
+                <p class="cd" th:if="${#fields.hasErrors('${valorantMatch.deaths}')}" th:errors="${valorantMatch.deaths}"></p>
+
+                <p>
+                    <label>Assists:</label>
+                    <input type="number" th:field="${valorantMatch.assists}" />
+                </p>
+                <p class="cd" th:if="${#fields.hasErrors('${valorantMatch.assists}')}" th:errors="${valorantMatch.assists}"></p>
+
+                <p>
+                    <label>Damage Dealt:</label>
+                    <input type="number" th:field="${valorantMatch.damage}" />
+                </p>
+                <p class="cd" th:if="${#fields.hasErrors('${valorantMatch.damage}')}" th:errors="${valorantMatch.damage}"></p>
+
+                <p>
+                    <label>Rounds Played:</label>
+                    <input type="number" th:field="${valorantMatch.rounds}" />
+                </p>
+                <p class="cd" th:if="${#fields.hasErrors('${valorantMatch.rounds}')}" th:errors="${valorantMatch.rounds}"></p>
+
+                <p>
+                    <label>KAST Rounds:</label>
+                    <input type="number" th:field="${valorantMatch.kastRounds}" />
+                </p>
+                <p class="cd" th:if="${#fields.hasErrors('${valorantMatch.kastRounds}')}" th:errors="${valorantMatch.kastRounds}"></p>
+                <!--            Show any business validation issues-->
+                <ul th:each="businessValidationError : ${businessValidationErrorsKastRounds}">
+                    <li class="cd" th:text="${businessValidationError}"></li>
+                </ul>
+
+                <!-- Submit button -->
+                <button style="display:block;margin-top:24px!important" class="centered" th:text="#{label.submit}">Submit</button>
+            </form>
+
+        </div>
+        <footer th:replace="fragments/footer :: footer"></footer>
+    </body>
+</html>

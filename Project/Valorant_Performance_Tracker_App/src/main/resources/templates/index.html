@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:include="fragments/head :: headerFragment">
+    <title id="pageTitle">Valorant Performance Tracker</title>
+    <!--        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>-->
+</head>
+<body>
+<nav th:replace="fragments/navHeader :: navbar"></nav>
+
+<!--        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>-->
+<div style="width:600px; height:350px;">
+    <canvas id="matchChart"></canvas>
+</div>
+
+<script th:inline="javascript">
+    //Calculated in the BaseController from the stored match data (see ValorantMatchBO).
+    const matchLabels = [[${labels}]]; //Note possible syntax warning issue but functions correctly.
+    const acsValues = [[${acsValues}]];
+    const kdaValues = [[${kdaValues}]];
+    const kastValues = [[${kastValues}]];
+
+    const ctx = document.getElementById('matchChart');
+
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: matchLabels,
+            datasets: [{
+                label: 'ACS (simplified)',
+                data: acsValues,
+                borderWidth: 1,
+                backgroundColor: '#FF4655'
+            },
+                {
+                    label: 'KDA Ratio',
+                    data: kdaValues,
+                    borderWidth: 1,
+                    backgroundColor: '#000000'
+                },
+                {
+                    label: 'KAST %',
+                    data: kastValues,
+                    borderWidth: 1,
+                    backgroundColor: '#ffffff'
+                }
+            ]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    })
+    ;
+</script>
+
+
+<footer th:replace="fragments/footer :: footer"></footer>
+
+
+</body>
+</html>

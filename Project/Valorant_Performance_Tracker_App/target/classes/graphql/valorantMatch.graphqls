@@ -1,0 +1,36 @@
+type ValorantMatch {
+  matchId: Int
+  playerName: String
+  agent: String
+  mapName: String
+  kills: Int
+  deaths: Int
+  assists: Int
+  damage: Int
+  rounds: Int
+  kastRounds: Int
+}
+
+input ValorantMatchInput {
+  playerName: String!
+  agent: String!
+  mapName: String!
+  kills: Int!
+  deaths: Int!
+  assists: Int!
+  damage: Int!
+  rounds: Int!
+  kastRounds: Int!
+}
+
+type Query {
+  matches: [ValorantMatch!]!
+  matchById(id: Int!): ValorantMatch
+  findByPlayer(name: String!): [ValorantMatch!]!
+}
+
+type Mutation {
+  createMatch(input: ValorantMatchInput!): ValorantMatch!
+  updateMatch(id: Int!, input: ValorantMatchInput!): ValorantMatch!
+  deleteMatch(id: Int!): Boolean!
+}

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+
+<!--Thanks to Ferhad, Francisco, and Carter from grad 2022 for the styling on this page.-->
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head :: head">
+    <title id="pageTitle" th:text="${session.title}">Topic List</title>
+</head>
+<body>
+<nav th:replace="fragments/navHeader :: navbar"></nav>
+<div class="container my-4">
+    <h2 class="mb-3 text-center title">Valorant Match List for Edit</h2>
+    <h2 class="mb-3 text-center error" th:if="${not #strings.isEmpty(messageError)}" th:text="${messageError}">Message
+        from controller</h2>
+    <h2 class="mb-3 text-center success" th:if="${not #strings.isEmpty(messageSuccess)}" th:text="${messageSuccess}">
+        Message success from controller</h2>
+
+    <div class="table-responsive">
+        <form action="#" th:action="@{/valorantmatch/list/edit/submit}" th:object="${form}"
+              method="post">
+            <fieldset>
+                <input type="submit" id="submitButton" th:value="Save">
+                <input type="reset" id="resetButton" name="reset" th:value="Reset"/>
+                <table class="table table-striped table-hover align-middle">
+                    <thead class="table-dark text-center">
+                    <tr>
+                        <th>ID</th>
+                        <th>Player Name</th>
+                        <th>Agent</th>
+                        <th>Map</th>
+                        <th>Kills</th>
+                        <th>Deaths</th>
+                        <th>Assists</th>
+                        <th>Damage Dealt</th>
+                        <th>Rounds Played</th>
+                        <th>KAST Rounds</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+
+                    <tr th:each="current,itemStat : ${form.matches}">
+                        <td><input th:field="*{matches[__${itemStat.index}__].matchId}"/></td>
+                        <td><input th:field="*{matches[__${itemStat.index}__].playerName}"/></td>
+                        <td><input th:field="*{matches[__${itemStat.index}__].agent}"/></td>
+                        <td><input th:field="*{matches[__${itemStat.index}__].mapName}"/></td>
+                        <td><input th:field="*{matches[__${itemStat.index}__].kills}"/></td>
+                        <td><input th:field="*{matches[__${itemStat.index}__].deaths}"/></td>
+                        <td><input th:field="*{matches[__${itemStat.index}__].assists}"/></td>
+                        <td><input th:field="*{matches[__${itemStat.index}__].damage}"/></td>
+                        <td><input th:field="*{matches[__${itemStat.index}__].rounds}"/></td>
+                        <td><input th:field="*{matches[__${itemStat.index}__].kastRounds}"/></td>
+                    </tr>
+
+                    <!-- Message when no data -->
+                    <tr th:if="${#lists.isEmpty(form.matches)}">
+                        <td colspan="10" class="text-center text-muted py-4">
+                            No matches found.
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </fieldset>
+        </form>
+    </div>
+
+
+</div>
+<footer th:replace="fragments/footer :: footer"></footer>
+</body>
+</html>
