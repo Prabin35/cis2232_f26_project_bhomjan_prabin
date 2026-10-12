@@ -25,3 +25,7 @@ replay_pid*
 
 # macOS files
 .DS_Store
+
+target/
+.idea/dataSources/
+Project/Valorant_Performance_Tracker_App/.idea/dataSources.xml
