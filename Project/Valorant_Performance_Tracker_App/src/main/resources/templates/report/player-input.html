@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head :: headerFragment"></head>
+<body>
+<nav th:replace="fragments/navHeader :: navbar"></nav>
+<section class="section"><div class="container">
+<h1 class="title">Player Performance Report</h1>
+<p>Enter a Valorant player name to see their match performance.</p>
+<p class="has-text-danger" th:if="${error}" th:text="${error}"></p>
+<form th:action="@{/report/player}" method="post">
+    <div class="field"><label class="label" for="playerName">Player name</label>
+    <div class="control"><input class="input" id="playerName" name="playerName" type="text" maxlength="100" required placeholder="Example: Prabin1"></div></div>
+    <button class="button is-primary" type="submit">Generate Report</button>
+</form></div></section>
+<footer th:replace="fragments/footer :: footer"></footer>
+</body></html>

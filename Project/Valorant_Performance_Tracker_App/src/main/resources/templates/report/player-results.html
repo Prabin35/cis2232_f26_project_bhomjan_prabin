@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head :: headerFragment"></head>
+<body>
+<nav th:replace="fragments/navHeader :: navbar"></nav>
+<section class="section"><div class="container">
+<h1 class="title">Player Performance Report</h1>
+<p><strong>Player:</strong> <span th:text="${playerName}"></span></p>
+<p th:unless="${hasRows}">No matches found for this player. No file was created.</p>
+<div th:if="${hasRows}">
+<p>Report saved to: <span th:text="${filePath}"></span></p>
+<table class="table is-striped is-fullwidth"><thead><tr>
+<th>Agent</th><th>Map</th><th>Kills</th><th>Deaths</th><th>Assists</th><th>KDA</th><th>ACS</th><th>KAST %</th>
+</tr></thead><tbody><tr th:each="row : ${rows}">
+<td th:text="${row.agent}"></td><td th:text="${row.map}"></td>
+<td th:text="${row.kills}"></td><td th:text="${row.deaths}"></td><td th:text="${row.assists}"></td>
+<td th:text="${#numbers.formatDecimal(row.kda,1,2)}"></td>
+<td th:text="${#numbers.formatDecimal(row.acs,1,2)}"></td>
+<td th:text="${#numbers.formatDecimal(row.kast,1,2)}"></td>
+</tr></tbody></table>
+<h2 class="subtitle">Average Combat Score by Match</h2>
+<div style="max-width:750px"><canvas id="acsChart"></canvas></div>
+<script th:inline="javascript">
+    // Chart data is passed from the controller to Thymeleaf.
+    const labels = /*[[${labels}]]*/ [];
+    const scores = /*[[${acsValues}]]*/ [];
+    new Chart(document.getElementById('acsChart'), {
+        type: 'bar',
+        data: {labels: labels, datasets: [{label: 'Simplified ACS', data: scores, backgroundColor: '#FF4655'}]},
+        options: {scales: {y: {beginAtZero: true}}}
+    });
+</script>
+</div><a class="button" th:href="@{/report/player}">New Report</a>
+</div></section><footer th:replace="fragments/footer :: footer"></footer>
+</body></html>

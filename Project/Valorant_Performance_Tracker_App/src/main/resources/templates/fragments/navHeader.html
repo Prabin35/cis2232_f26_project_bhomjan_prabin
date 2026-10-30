@@ -1,5 +1,7 @@
+
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
 
 <body>
 <nav th:fragment="navbar" class="navbar nav" role="navigation" aria-label="main navigation">
@@ -16,8 +18,13 @@
             <span aria-hidden="true"></span>
         </a>
     </div>
+
     <div id="navbarBasicExample" class="navbar-menu">
         <div class="navbar-end">
+
+            <!-- Sprint 2 - Link to the Player Performance Report -->
+            <a class="navbar-item accent" th:href="@{/report/player}">Player Report</a>
+
             <div class="navbar-item has-dropdown is-hoverable">
                 <a th:href="@{/valorantmatch}" href="/valorantmatch/" class="accent navbar-link">Matches</a>
                 <div class="accent-background navbar-dropdown">
@@ -25,6 +32,7 @@
                     <a th:href="@{/valorantmatch/list/edit}" class="accent navbar-item">List Edit</a>
                 </div>
             </div>
+
             <div class="navbar-end">
                 <div class="navbar-item has-dropdown is-hoverable">
                     <a th:href="@{/about}" href="/about" class="accent navbar-link">Other</a>
@@ -35,6 +43,7 @@
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
 </nav>
