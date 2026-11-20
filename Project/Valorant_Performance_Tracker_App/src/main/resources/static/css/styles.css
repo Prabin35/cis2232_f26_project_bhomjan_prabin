@@ -334,3 +334,480 @@ Arrange invoice list tittle and add button
 .tableStyles td:last-child {
     padding-right: 10px;
 }
+
+
+/* Sprint 3 - UI Improvements */
+
+:root {
+    --main-color-light: #f3f5f9;
+    --main-color-primary: #ff4655;
+    --main-color-dark: #111827;
+    --main-color-bright: #182235;
+}
+
+/* Main background */
+body {
+    background: #f3f5f9;
+    color: #172033;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Main content */
+.container {
+    background: transparent;
+    max-width: 1380px;
+    padding: 20px 18px 35px;
+}
+
+/* Page titles */
+.title {
+    color: #172033 !important;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+}
+
+/* Navigation */
+.nav {
+    background: #111827;
+    box-shadow: 0 3px 16px rgba(0, 0, 0, 0.14);
+}
+
+.ftr {
+    background: #111827;
+    color: white;
+}
+
+.navbar-item:hover,
+.navbar-link:hover {
+    background: #263347 !important;
+    color: white !important;
+}
+
+/* Match history table */
+.table-responsive {
+    overflow-x: auto;
+    background: white;
+    border-radius: 14px;
+    padding: 14px;
+    box-shadow: 0 7px 26px rgba(16, 24, 40, 0.09);
+}
+
+.table-responsive table {
+    display: table !important;
+    width: 100% !important;
+    background: white !important;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+.table-responsive th,
+.table-responsive td {
+    padding: 12px 13px !important;
+    vertical-align: middle !important;
+    white-space: nowrap;
+    border-bottom: 1px solid #e7eaf0;
+}
+
+.table-responsive thead th {
+    background: #172033 !important;
+    color: white !important;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.35px;
+}
+
+.table-responsive tbody tr:nth-child(even) {
+    background: #f8f9fc;
+}
+
+.table-responsive tbody tr:hover {
+    background: #fff2f3 !important;
+}
+
+/* Edit and Delete buttons */
+.table-responsive .btn-group {
+    display: inline-flex;
+    gap: 7px;
+    white-space: nowrap;
+}
+
+.table-responsive .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    padding: 8px 12px !important;
+    font-size: 13px;
+    font-weight: 700;
+    border-radius: 7px;
+    text-decoration: none;
+    min-width: 75px;
+}
+
+/* Blue Edit button */
+.table-responsive .btn-outline-primary {
+    background: #2463d5 !important;
+    border: 1px solid #2463d5 !important;
+    color: white !important;
+}
+
+.table-responsive .btn-outline-primary:hover {
+    background: #164aa9 !important;
+}
+
+/* Red Delete button */
+.table-responsive .btn-outline-danger {
+    background: #d92d3d !important;
+    border: 1px solid #d92d3d !important;
+    color: white !important;
+}
+
+.table-responsive .btn-outline-danger:hover {
+    background: #ae1f30 !important;
+}
+
+/* Search and form inputs */
+.container form:not(.wbb) input,
+.wbb input {
+    background: white;
+    border: 1px solid #cbd3df;
+    border-radius: 7px;
+    padding: 8px 10px;
+    color: #172033;
+    max-width: 100%;
+}
+
+.container form:not(.wbb) input:focus,
+.wbb input:focus {
+    outline: 2px solid #ff4655;
+    outline-offset: 1px;
+}
+
+/* Add/Edit form card */
+.wbb {
+    background: white !important;
+    border: 1px solid #e5e9f0 !important;
+    border-radius: 14px !important;
+    padding: 24px !important;
+    box-shadow: 0 8px 28px rgba(16, 24, 40, 0.09);
+    white-space: normal !important;
+    max-width: 100%;
+}
+
+.wbb p {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin: 0 0 10px;
+}
+
+.wbb label {
+    font-weight: 600;
+    color: #263347;
+}
+
+.wbb input {
+    min-width: 210px;
+}
+
+.wbb .cd {
+    display: block;
+    color: #bd1e2e !important;
+    font-size: 13px;
+}
+
+/* Main buttons */
+.container button,
+.container .btn-success,
+.wbb button {
+    border-radius: 8px !important;
+    padding: 9px 18px !important;
+    font-weight: 700;
+}
+
+.container .btn-success,
+.wbb button {
+    background: #ff4655 !important;
+    color: white !important;
+    border: 1px solid #ff4655 !important;
+}
+
+.container .btn-success:hover,
+.wbb button:hover {
+    background: #dc3444 !important;
+}
+
+/* Mobile screen improvements */
+@media (max-width: 760px) {
+    .container {
+        padding: 12px;
+    }
+
+    .wbb {
+        width: 100%;
+    }
+
+    .wbb p {
+        display: block;
+    }
+
+    .wbb label,
+    .wbb input {
+        display: block;
+        width: 100%;
+    }
+
+    .table-responsive {
+        padding: 8px;
+    }
+}
+
+/* =========================================
+   VALORANT DARK RED THEME
+   ========================================= */
+
+:root {
+    --valorant-red: #ff4655;
+    --valorant-dark: #0f1923;
+    --valorant-card: #1b2733;
+    --valorant-border: #354352;
+    --valorant-text: #ece8e1;
+}
+
+/* Main page */
+html, body {
+    background: #0f1923 !important;
+    color: #ece8e1 !important;
+    min-height: 100%;
+}
+
+/* Main content */
+.container {
+    background: transparent !important;
+    color: #ece8e1 !important;
+}
+
+/* Headings */
+.title,
+h1, h2, h3 {
+    color: #ff4655 !important;
+}
+
+/* Navigation bar */
+nav,
+.nav,
+.navbar {
+    background: #111b26 !important;
+    color: white !important;
+    border-bottom: 3px solid #ff4655;
+}
+
+/* Fix faded navigation links */
+.navbar-item,
+.navbar-link,
+.navbar-item a,
+.navbar-brand a,
+.navbar-menu a {
+    color: #ffffff !important;
+    opacity: 1 !important;
+    font-weight: 600;
+}
+
+/* Navigation hover */
+.navbar-item:hover,
+.navbar-link:hover,
+.navbar-item:focus,
+.navbar-link:focus {
+    background: #263442 !important;
+    color: #ff4655 !important;
+}
+
+/* Dropdown menu */
+.navbar-dropdown {
+    background: #1b2733 !important;
+    border: 1px solid #354352;
+}
+
+.navbar-dropdown .navbar-item {
+    color: white !important;
+}
+
+/* Match table container */
+.table-responsive {
+    background: #1b2733 !important;
+    border: 1px solid #354352;
+    border-radius: 12px;
+    padding: 15px;
+    overflow-x: auto;
+    box-shadow: 0 8px 28px rgba(0,0,0,0.3);
+}
+
+/* Match table */
+.table-responsive table {
+    background: #1b2733 !important;
+    color: #ece8e1 !important;
+    width: 100% !important;
+}
+
+/* Table header */
+.table-responsive thead th {
+    background: #ff4655 !important;
+    color: #ffffff !important;
+    border-color: #ff4655 !important;
+    font-weight: 700;
+}
+
+/* Table rows */
+.table-responsive tbody tr,
+.table-responsive tbody tr:nth-child(even) {
+    background: #1b2733 !important;
+}
+
+.table-responsive tbody tr:nth-child(odd) {
+    background: #202e3b !important;
+}
+
+.table-responsive tbody td {
+    color: #ffffff !important;
+    border-color: #354352 !important;
+}
+
+/* Hover */
+.table-responsive tbody tr:hover {
+    background: #354352 !important;
+}
+
+/* Edit button */
+.table-responsive .btn-outline-primary {
+    background: #2563eb !important;
+    color: white !important;
+    border: 1px solid #2563eb !important;
+}
+
+/* Delete button */
+.table-responsive .btn-outline-danger {
+    background: #dc3545 !important;
+    color: white !important;
+    border: 1px solid #dc3545 !important;
+}
+
+/* Add and submit buttons */
+.container .btn-success,
+.wbb button,
+.container button[type="submit"] {
+    background: #ff4655 !important;
+    color: white !important;
+    border: 1px solid #ff4655 !important;
+    font-weight: 700;
+}
+
+/* Add/Edit form */
+.wbb {
+    background: #1b2733 !important;
+    color: white !important;
+    border: 1px solid #354352 !important;
+    border-radius: 12px;
+}
+
+.wbb label {
+    color: white !important;
+}
+
+.wbb input,
+.container form input {
+    background: #111b26 !important;
+    color: white !important;
+    border: 1px solid #526173 !important;
+}
+
+.wbb input:focus,
+.container form input:focus {
+    border-color: #ff4655 !important;
+    outline: 2px solid #ff4655;
+}
+
+/* Footer */
+footer,
+.ftr {
+    background: #111b26 !important;
+    color: white !important;
+    border-top: 2px solid #ff4655;
+}
+
+/* Chart canvas */
+canvas {
+    max-width: 100%;
+}
+
+/* Keep chart content centered */
+.container canvas {
+    display: block;
+    margin: 20px auto;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+    .container {
+        padding: 15px;
+    }
+
+    .table-responsive {
+        padding: 8px;
+    }
+}
+
+/* =========================================
+   FIX MATCH TABLE WHITE ROWS
+   ========================================= */
+
+/* Override Bootstrap table backgrounds */
+#theData {
+    --bs-table-bg: #1b2733;
+    --bs-table-striped-bg: #243443;
+    --bs-table-hover-bg: #304456;
+    --bs-table-color: #ffffff;
+    --bs-table-striped-color: #ffffff;
+    --bs-table-hover-color: #ffffff;
+
+    background-color: #1b2733 !important;
+    color: #ffffff !important;
+}
+
+/* Make all table cells dark with white text */
+#theData tbody tr td {
+    background-color: #1b2733 !important;
+    color: #ffffff !important;
+    box-shadow: none !important;
+}
+
+/* Alternating dark rows */
+#theData tbody tr:nth-child(even) td {
+    background-color: #243443 !important;
+}
+
+/* Highlight row on hover */
+#theData tbody tr:hover td {
+    background-color: #304456 !important;
+    color: #ffffff !important;
+}
+
+/* Keep table header Valorant red */
+#theData thead th {
+    background-color: #ff4655 !important;
+    color: #ffffff !important;
+    box-shadow: none !important;
+}
+
+/* Ensure all player names and statistics are visible */
+#theData tbody td,
+#theData tbody td a {
+    color: #ffffff;
+}
+
+/* Keep Edit and Delete button text white */
+#theData .btn-outline-primary,
+#theData .btn-outline-danger {
+    color: #ffffff !important;
+}
