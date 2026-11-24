@@ -160,6 +160,69 @@ After completing the report, I will test the following:
 6. Search for a player who does not exist.
 7. Check if the application handles an empty player name.
 
-Once the report is working correctly, I will assign Work Item 5 to my BA for testing.
 
-The BA will check if the report meets the requirements and update the GitHub issue with the testing results. If any problems are found, I will make the necessary changes before the issue is closed.
+## CRUD Details ##
+
+### Sprint 3 - CRUD, Spring Data JPA and Validation ###
+
+For Sprint 3, I am completing the CRUD (Create, Read, Update, Delete) functionality for the application. The user will be able to view, add, edit, and delete Valorant matches.
+
+This functionality uses Spring MVC and Spring Data JPA. Validation is also added to make sure the user enters correct information when adding or editing a match.
+
+### CRUD Features ###
+
+The application will have the following features:
+
+| Feature | Description |
+|:---|:---|
+| List | Displays all matches with the calculated KDA, ACS, and KAST % |
+| Search | Allows the user to search the list by player name |
+| Add | Allows the user to enter a new match |
+| Update | Allows the user to edit an existing match |
+| Delete | Allows the user to remove a match |
+
+### Spring Data JPA ###
+
+For this sprint, I am using Spring Data JPA to work with the database.
+
+The `ValorantMatchRepository` interface will handle saving, updating, finding, and deleting records in the `valorant_match` table. It also includes a method to search for matches by player name.
+
+### Controller and Views ###
+
+The `ValorantMatchController` will handle the CRUD actions.
+
+The CRUD functionality will use two HTML pages:
+
+- `list.html` - Displays all matches with the Edit and Delete buttons and the search form.
+- `add.html` - Allows the user to add a new match or edit an existing match.
+
+### Validation ###
+
+Validation will be used when the user adds or edits a match. If the information is not valid, the form will be shown again with an error message beside the field.
+
+| Name | Validation Rule |
+|:---|:---|
+| Player Name | Required, up to 100 characters |
+| Agent | Required, up to 50 characters |
+| Map | Required, up to 50 characters |
+| Kills | Required, cannot be negative |
+| Deaths | Required, cannot be negative |
+| Assists | Required, cannot be negative |
+| Damage Dealt | Required, cannot be negative |
+| Rounds Played | Required, must be at least 1 |
+| KAST Rounds | Required, cannot be negative |
+
+The application also includes a business rule: KAST Rounds cannot be greater than Rounds Played. This is checked in the `ValorantMatchValidationBO` class.
+
+### Testing ###
+
+After completing this sprint, I will test the following:
+
+1. Check if all matches are displayed in the list.
+2. Search for a player by name.
+3. Add a new match with valid information.
+4. Edit an existing match and check if the changes are saved.
+5. Delete a match and check if it is removed from the list.
+6. Submit the form with an empty player name, agent, or map.
+7. Submit the form with negative values or zero rounds played.
+8. Submit the form with KAST Rounds greater than Rounds Played.

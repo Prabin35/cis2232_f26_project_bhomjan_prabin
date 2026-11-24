@@ -1,5 +1,6 @@
 package ca.hccis.valorant.controllers;
 
+import ca.hccis.valorant.bo.ValorantMatchBO;
 import ca.hccis.valorant.bo.ValorantMatchValidationBO;
 import ca.hccis.valorant.entity.ValorantMatchDto;
 import ca.hccis.valorant.jpa.entity.ValorantMatch;
@@ -106,7 +107,8 @@ public class ValorantMatchController {
      *
      * @param valorantMatch what is being added or modified
      * @param bindingResult Result of validation
-     * @return add with errors or redirect to the list
+     * @return add with errors, or the list with the calculated details of the
+     * saved match
      */
     @RequestMapping("/submit")
     public String submit(Model model, @Valid @ModelAttribute("valorantMatch") ValorantMatch valorantMatch, BindingResult bindingResult) {
@@ -131,7 +133,21 @@ public class ValorantMatchController {
         }
 
         _vmr.save(valorantMatch);
-        return "redirect:/valorantmatch";
+
+        //Calculate the statistics for the saved match and show them to the user.
+        String details = String.format("Match saved for %s (%s on %s) - KDA: %.2f, ACS: %.2f, KAST: %.2f%%",
+                valorantMatch.getPlayerName(),
+                valorantMatch.getAgent(),
+                valorantMatch.getMapName(),
+                ValorantMatchBO.calculateKdaRatio(valorantMatch),
+                ValorantMatchBO.calculateAcs(valorantMatch),
+                ValorantMatchBO.calculateKastPercentage(valorantMatch));
+        model.addAttribute("messageSuccess", details);
+
+        Iterable<ValorantMatch> matches = _vmr.findAll();
+        model.addAttribute("matches", matches);
+        model.addAttribute("match", new ValorantMatch());
+        return "valorantmatch/list";
     }
 
     /**
